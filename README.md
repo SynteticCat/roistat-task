@@ -1,6 +1,12 @@
-# roistat-test
+# 📊 Тестовое задание в компанию [Roistat](https://roistat.com/ru/index_new) на Vue.js 
+Ранее не писал на Vue и вот что получилось:  
+  
+![presentation.jpg](https://github.com/SynteticCat/roistat-task/blob/main/presentation.jpg)
 
-> A Vue.js project
+* **Время на разработку:** ~10,4ч
+* **Сделано дополнительно:** простейшая валидация форм, колонки **ID** и **Начальник**, описание к ТЗ для удобства  
+* **Code Conv:** [code conv (roistat)](https://github.com/roistat/php-code-conventions)  
+* **Компоненты:** самописные  
 
 ## Build Setup
 
