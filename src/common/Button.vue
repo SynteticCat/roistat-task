@@ -14,11 +14,12 @@
 
 <style scoped>
     button {
-        background-color: #DDD;
-        padding: 7px 25px;
-        border: 1px solid #000;
-        border-radius: 13px;
+        background-color: #2185D0;
+        color: #fff;
+        border: none;
         outline: none;
         cursor: pointer;
+        padding: 10px 20px;
+        border-radius: 5px;
     }
 </style>

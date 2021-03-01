@@ -15,7 +15,14 @@ import UsersModal from './UsersModal';
 
 export default {
     name: 'Users',
-    components: { UsersTable, UsersEmptyTable, Button, UsersModal },
+
+    components: { 
+        UsersTable, 
+        UsersEmptyTable, 
+        Button, 
+        UsersModal 
+    },
+
     data() {
         return {
             users: [],  // graph model (for calculating)
@@ -24,64 +31,71 @@ export default {
             showModal: false
         };
     },
+
     methods: {
-        sort(by) {
-            if (by === 'id') {
+        sort(field) {
+            if (field === 'id') {
                 this.initFlatUsers();
-            } else if (by === 'name') {
-                this.initFlatUsersByName();
-            } else if (by === 'tel') {
-                this.initFlatUsersByTel();
+            } else {
+                this.lexicographicSort(field);
             }
         },
 
-        save(user) {
-            this.showModal = false;
-            const newUser = this.createNewUser(user)
-            this.initFlatUsers();
-            this.chiefs.push(this.createNewChief(newUser));
+        lexicographicSort(field) {
+            this.flatUsers.sort((u1, u2) => {
+                const a = u1[field], b = u2[field];
+                return (a < b) ? -1 : (a > b) ? 1 : 0;
+            });
         },
 
-        createNewUser(user) {
-            let newUserId = null;
+        save(params) {
+            this.showModal = false;
+            const user = this.addUser(params)
+            this.chiefs.push(this.createChief(user));
+            this.initFlatUsers();
+        },
+
+        // methods for 'users'
+
+        initUsers() {
+            this.users = JSON.parse(window.localStorage.getItem('users')) || [];
+        },
+
+        addUser({ name, tel, chiefId }) {
+            let userId = null;
             let chief = ''
 
-            if (user.chiefId) {
-                chief = this.chiefs.find(chief => chief.id === user.chiefId);
-                newUserId = chief.id + '.' + (chief.user.children.length + 1);
+            if (chiefId) {
+                chief = this.chiefs.find(chief => chief.id === chiefId);
+                userId = chief.id + '.' + (chief.user.children.length + 1);
             } else {
-                newUserId = this.users.length + 1;
+                userId = this.users.length + 1;
             }
 
-            const newUser = {
-                id: newUserId,
-                name: user.name,
-                tel: user.tel,
+            const user = {
+                id: userId,
+                name,
+                tel,
                 chiefName: chief.name || '',
                 children: []
             };
 
-            if (user.chiefId) {
-                chief.user.children.push(newUser);
+            if (chiefId) {
+                chief.user.children.push(user);
             } else {
-                this.users.push(newUser);
+                this.users.push(user);
             }
 
-            return newUser;
+            return user;
         },
 
-        createNewChief(user) {
-            return {
-                id: user.id,
-                name: user.name,
-                text: `${user.name} (ID: ${user.id})`,
-                user
+        subscribeUsersStore() {
+            window.onbeforeunload = () => {
+                window.localStorage.setItem('users', JSON.stringify(this.users));
             };
         },
 
-        initChiefs() {
-            this.chiefs = this.flatUsers.map(user => this.createNewChief(user));
-        },
+        // methods for 'flat users'
 
         initFlatUsers() {
             this.flatUsers = [];
@@ -97,29 +111,29 @@ export default {
             dfs(this.users);
         },
 
-        initFlatUsersByName() {
-            this.flatUsers.sort((f1, f2) => {
-                const a = f1.name, b = f2.name;
-                return (a < b) ? -1 : (a > b) ? 1 : 0;
-            });
+        // methods for 'chiefs'
+
+        initChiefs() {
+            this.chiefs = this.flatUsers.map(user => this.createChief(user));
         },
 
-        initFlatUsersByTel() {
-            this.flatUsers.sort((f1, f2) => {
-                const a = f1.tel, b = f2.tel;
-                return (a < b) ? -1 : (a > b) ? 1 : 0;
-            });
+        createChief(user) {
+            return {
+                id: user.id,
+                name: user.name,
+                text: `${user.name} (ID: ${user.id})`,
+                user
+            };
         }
     },
+
     mounted() {
         this.$nextTick(function () {  
-            this.users = JSON.parse(window.localStorage.getItem('users')) || [];
+            this.initUsers();
             this.initFlatUsers();
             this.initChiefs();
-            window.onbeforeunload = () => {
-                window.localStorage.setItem('users', JSON.stringify(this.users));
-            };
-        })
+            this.subscribeUsersStore();
+        });
     }
 }
 </script>

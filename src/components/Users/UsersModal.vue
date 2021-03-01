@@ -9,8 +9,8 @@
             <ul class="param__list">
                 <li class="param__item">
                     <label for="name">Имя</label>
-                    <input id="name" type="text" autocomplete="off" v-model.trim="name"
-                        placeholder="Иван">
+                    <input id="name" type="text" autocomplete="off" 
+                        v-model.trim="name" placeholder="Иван">
                 </li>
 
                 <li class="param__item">
@@ -42,7 +42,9 @@ import Button from '../../common/Button';
 
 export default {
     name: 'UsersModal',
+
     props: ['chiefs'],
+
     data() {
         return {
             name: null,
@@ -50,21 +52,24 @@ export default {
             chiefId: null
         };
     },
+
     components: {
         Button
     },
+
     methods: {
         save() {
-            const newUser = {
+            const params = {
                 name: this.name,
                 tel: this.tel,
                 chiefId: this.chiefId
             };
 
             if (this.checkFields()) {
-                this.$emit('save', newUser);
+                this.$emit('save', params);
             }
         },
+
         checkFields() {
             if (!this.name) {
                 alert('Требуется указать имя.');
@@ -78,11 +83,10 @@ export default {
 
             return true;
         },
+        
         checkTel() {
-            const req1 = /[+]7\s\d{3}\s\d{3}\s\d{2}\s\d{2}/;
-            const req2  =/.[+]7\s\d{3}\s\d{3}\s\d{2}\s\d{2}/;
-            const req3  =/[+]7\s\d{3}\s\d{3}\s\d{2}\s\d{2}./;
-            return req1.test(this.tel) && !req2.test(this.tel) && !req3.test(this.tel);
+            const reg = /^[+]7\s\d{3}\s\d{3}\s\d{2}\s\d{2}$/;
+            return reg.test(this.tel);
         }
     }
 }
@@ -104,9 +108,9 @@ export default {
 
     .modal__wrapper {
         width: auto;
-        border: 1px solid #000;
         padding: 10px 17px;
         background-color: #fff;
+        border-radius: 5px;
     }
 
     .modal__header {
@@ -116,8 +120,29 @@ export default {
         margin-bottom: 20px;
     }
 
+    .modal__title {
+        font-size: 1.3em;
+        font-weight: bold;
+    }
+
     .modal__close {
         cursor: pointer;
+        background-color: red;
+        margin-top: -15px;
+        width: 20px;
+        height: 30px;
+        border-bottom-left-radius: 5px;
+        border-bottom-right-radius: 5px;
+        color: #fff;
+        display: flex;
+        justify-content: center;
+        align-items: flex-end;
+        padding-bottom: 5px;
+        box-sizing: border-box;
+    }
+
+    .modal__close:hover {
+        
     }
 
     .param__list {
@@ -132,12 +157,27 @@ export default {
         align-items: center;
     }
 
+    /* input, select {
+        border: none;
+        outline: none;
+        padding: 15px 20px;
+        border-radius: 5px;
+        border: 1px solid #bbc0c4;
+    }
+
+    input:focus {
+        border-radius: 5px;
+        border: 1px solid #2185D0;
+        box-shadow: 0 0 0 4px #6cbbf7;
+    } */
+
     .param__item:nth-child(n + 2) {
         margin-top: 15px;
     }
 
     .param__item label {
         width: 110px;
+        cursor: pointer;
     }
 
     .param__tip {
@@ -146,6 +186,7 @@ export default {
         text-transform: lowercase;
         font-style: italic;
         text-align: right;
+        margin-top: 4px;
     }
 
     .param__item input,
