@@ -8,6 +8,10 @@
 * **Code Conv:** [code conv (roistat)](https://github.com/roistat/php-code-conventions)  
 * **Компоненты:** самописные  
 
+Очень люблю и уважаю профессионалов в UI/UX-дизайне, но сам не дизайнер, вот что получил после доработки дизайна:  
+
+![!presentation-2.jpg](https://github.com/SynteticCat/roistat-task/blob/main/presentation-2.jpg)
+
 ## Build Setup
 
 ``` bash
