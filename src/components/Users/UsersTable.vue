@@ -64,6 +64,10 @@
         border-top: 2px solid #2185D0;
     }
 
+    tr {
+        background-color: #fff;
+    }
+    
     tr:nth-child(odd) {
         background-color: #F9FAFC;
     }

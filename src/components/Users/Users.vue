@@ -145,6 +145,7 @@ export default {
         flex-direction: column;
         align-items: flex-end;
         max-width: max-content;
+        padding-top: 10px;
     }
 
     .users__btn {

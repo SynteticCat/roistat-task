@@ -108,7 +108,7 @@ export default {
 
     .modal__wrapper {
         width: auto;
-        padding: 10px 17px;
+        padding: 0 17px 10px 17px;
         background-color: #fff;
         border-radius: 5px;
     }
@@ -116,19 +116,19 @@ export default {
     .modal__header {
         display: flex;
         justify-content: space-between;
-        align-items: center;
+        align-items: flex-start;
         margin-bottom: 20px;
     }
 
     .modal__title {
-        font-size: 1.3em;
         font-weight: bold;
+        font-size: 1.3em;
+        padding: 10px 0;
     }
 
     .modal__close {
         cursor: pointer;
         background-color: red;
-        margin-top: -15px;
         width: 20px;
         height: 30px;
         border-bottom-left-radius: 5px;
@@ -139,10 +139,31 @@ export default {
         align-items: flex-end;
         padding-bottom: 5px;
         box-sizing: border-box;
+        transition: .3s ease;
+        position: relative;
+    }
+
+    .modal__close::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 1px;
+        right: 0;
+        height: 1px;
+        width: 18px;
+        background-color: #fff;
+        opacity: 0;
+        transition: .3s ease;
+    }
+
+    .modal__close:hover::before {
+        opacity: 1;
     }
 
     .modal__close:hover {
-        
+        background-color: #fff;
+        box-shadow: 0 0 0px 1px red inset;
+        color: red;
     }
 
     .param__list {
@@ -157,19 +178,27 @@ export default {
         align-items: center;
     }
 
-    /* input, select {
+    input, select {
         border: none;
         outline: none;
-        padding: 15px 20px;
+        padding: 10px 20px;
         border-radius: 5px;
         border: 1px solid #bbc0c4;
+    }
+
+    input:hover, select:hover {
+        border: 1px solid #2185D0;
+    }
+
+    select:hover {
+        cursor: pointer;
     }
 
     input:focus {
         border-radius: 5px;
         border: 1px solid #2185D0;
         box-shadow: 0 0 0 4px #6cbbf7;
-    } */
+    }
 
     .param__item:nth-child(n + 2) {
         margin-top: 15px;
@@ -191,8 +220,7 @@ export default {
 
     .param__item input,
     .param__item select {
-        width: 220px;
+        width: 280px;
         box-sizing: border-box;
-        height: 25px;
     }
 </style>

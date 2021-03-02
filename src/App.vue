@@ -2,7 +2,7 @@
   <div id="app">
     <div class="content__wrapper">
       <Users/>
-      <About class="about"/>
+      <!-- <About class="about"/> -->
     </div>
   </div>
 </template>
@@ -20,6 +20,8 @@ export default {
 <style scoped>
   .content__wrapper {
     display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   .about {
